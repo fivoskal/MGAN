@@ -249,8 +249,11 @@ class MGAN(object):
         num_samples = tile_shape[0] * tile_shape[1]
         x = self._generate(num_samples)
         imgs = create_image_grid(x, img_size=self.img_size, tile_shape=tile_shape)
-        import scipy.misc
-        scipy.misc.imsave(filepath, imgs)
+        from imageio import imsave
+        try:
+            imsave(filepath, imgs)
+        except:
+            imsave(filepath+'.png', imgs)
 
     def _samples_by_gen(self, filepath):
         if not os.path.exists(os.path.dirname(filepath)):
@@ -274,5 +277,8 @@ class MGAN(object):
 
         x = (x + 1.0) / 2.0
         imgs = create_image_grid(x, img_size=self.img_size, tile_shape=tile_shape)
-        import scipy.misc
-        scipy.misc.imsave(filepath, imgs)
+        from imageio import imsave
+        try:
+            imsave(filepath, imgs)
+        except:
+            imsave(filepath+'.png', imgs)
