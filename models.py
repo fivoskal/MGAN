@@ -8,6 +8,7 @@ import numpy as np
 import tensorflow as tf
 from ops import lrelu, linear, conv2d, deconv2d
 from utils import make_batches, Prior, conv_out_size_same, create_image_grid
+SAVE_EVERY = 25
 
 batch_norm = partial(tf.contrib.layers.batch_norm,
                      decay=0.9,
@@ -54,6 +55,7 @@ class MGAN(object):
         self.sample_fp = sample_fp
         self.sample_by_gen_fp = sample_by_gen_fp
         self.random_seed = random_seed
+        self.saver = None
 
     def _init(self):
         self.epoch = 0
@@ -194,6 +196,7 @@ class MGAN(object):
             with self.tf_graph.as_default():
                 self._build_model()
                 self.tf_session.run(tf.global_variables_initializer())
+                self.saver = tf.train.Saver(tf.trainbale_variables(), )
 
         num_data = x.shape[0] - x.shape[0] % self.d_batch_size
         batches = make_batches(num_data, self.d_batch_size)
@@ -225,6 +228,10 @@ class MGAN(object):
                                 d_bin_loss, d_mul_loss, d_loss, g_bin_loss, g_mul_loss, g_loss))
             self._samples(self.sample_fp.format(epoch=self.epoch+1))
             self._samples_by_gen(self.sample_by_gen_fp.format(epoch=self.epoch+1))
+
+            if self.epoch % SAVE_EVERY == 0:
+              self.saver.save(sess=self.tf_session, save_path='mgan_checkpoint_{}'.format(self.epoch)) 
+
 
     def _generate(self, num_samples=100):
         sess = self.tf_session
@@ -282,3 +289,16 @@ class MGAN(object):
             imsave(filepath, imgs)
         except:
             imsave(filepath+'.png', imgs)
+
+    def _restore(self, filepath):
+        self._init()
+        with self.tf_graph.as_default():
+            self._build_model()
+            self.tf_session.run(tf.global_variables_initializer())
+            self.saver = tf.train.Saver(tf.trainable_variables(), )
+            print("Loading parameters from file:{}".format(filepath) )
+            try:
+              self.saver.restore(sess=self.tf_session, save_path=filepath)
+              print("Loaded succesfully")
+            except:
+              print("Ooops...")
