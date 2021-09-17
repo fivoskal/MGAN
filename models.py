@@ -196,7 +196,7 @@ class MGAN(object):
             with self.tf_graph.as_default():
                 self._build_model()
                 self.tf_session.run(tf.global_variables_initializer())
-                self.saver = tf.train.Saver(tf.trainbale_variables(), )
+                self.saver = tf.train.Saver(tf.trainable_variables(), )
 
         num_data = x.shape[0] - x.shape[0] % self.d_batch_size
         batches = make_batches(num_data, self.d_batch_size)
