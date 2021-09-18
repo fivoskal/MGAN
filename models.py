@@ -230,7 +230,9 @@ class MGAN(object):
             self._samples_by_gen(self.sample_by_gen_fp.format(epoch=self.epoch+1))
 
             if self.epoch % SAVE_EVERY == 0:
-              self.saver.save(sess=self.tf_session, save_path='mgan_checkpoint_{}'.format(self.epoch)) 
+              if not os.path.exists(os.path.dirname('./checkpoints')):
+                os.makedirs(os.path.dirname('./checkpoints'))
+              self.saver.save(sess=self.tf_session, save_path='./checkpoints/mgan_checkpoint_{}'.format(self.epoch)) 
 
 
     def _generate(self, num_samples=100):
