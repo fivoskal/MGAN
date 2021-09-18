@@ -8,7 +8,7 @@ import numpy as np
 import tensorflow as tf
 from ops import lrelu, linear, conv2d, deconv2d
 from utils import make_batches, Prior, conv_out_size_same, create_image_grid
-SAVE_EVERY = 25
+SAVE_EVERY = 50
 
 batch_norm = partial(tf.contrib.layers.batch_norm,
                      decay=0.9,
