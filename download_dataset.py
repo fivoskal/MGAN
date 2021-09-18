@@ -4,7 +4,7 @@ import numpy as np
 from keras.datasets import cifar10
 import os
 
-if not os.isdir('./data'):
+if not os.path.isdir('./data'):
   os.mkdir('./data')
 
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
