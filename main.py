@@ -15,7 +15,7 @@ FLAGS = None
 
 def main(_):
     tmp = pickle.load(open(FLAGS.dataset_file, "rb"))
-    x_train = tmp['data'].astype(np.float32).reshape([-1, 32, 32, 3]) / 127.5 - 1.
+    x_train = tmp['data'].astype(np.float32).reshape([-1]+FLAGS.img_size ) / 127.5 - 1.
     model = MGAN(
         num_z=FLAGS.num_z,
         beta=FLAGS.beta,
@@ -61,5 +61,7 @@ if __name__ == '__main__':
                         help='Number of epochs.')
     parser.add_argument('--dataset_file', type=str, default='./data/cifar10_train.pkl',
                         help='Dataset as a pickled dictionary {"data": Train_np_array, "labels": array-like}.')
+parser.add_argument('--image_size', nargs='+', type=int, default=[32, 32, 3],
+                        help='')
     FLAGS, unparsed = parser.parse_known_args()
     tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
