@@ -15,7 +15,7 @@ FLAGS = None
 
 def main(_):
     tmp = pickle.load(open(FLAGS.dataset_file, "rb"))
-    x_train = tmp['data'].astype(np.float32).reshape([-1]+FLAGS.img_size ) / 127.5 - 1.
+    x_train = tmp['data'].astype(np.float32).reshape([-1]+FLAGS.image_size ) / 127.5 - 1.
     model = MGAN(
         num_z=FLAGS.num_z,
         beta=FLAGS.beta,
@@ -24,7 +24,7 @@ def main(_):
         g_batch_size=FLAGS.g_batch_size,
         z_prior=FLAGS.z_prior,
         learning_rate=FLAGS.learning_rate,
-        img_size=(32, 32, 3),
+        img_size=FLAGS.image_size,
         num_conv_layers=FLAGS.num_conv_layers,
         num_gen_feature_maps=FLAGS.num_gen_feature_maps,
         num_dis_feature_maps=FLAGS.num_dis_feature_maps,
