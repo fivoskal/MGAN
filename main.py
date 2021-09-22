@@ -61,7 +61,7 @@ if __name__ == '__main__':
                         help='Number of epochs.')
     parser.add_argument('--dataset_file', type=str, default='./data/cifar10_train.pkl',
                         help='Dataset as a pickled dictionary {"data": Train_np_array, "labels": array-like}.')
-parser.add_argument('--image_size', nargs='+', type=int, default=[32, 32, 3],
+    parser.add_argument('--image_size', nargs='+', type=int, default=[32, 32, 3],
                         help='')
     FLAGS, unparsed = parser.parse_known_args()
     tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
