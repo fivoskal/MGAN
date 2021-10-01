@@ -32,6 +32,7 @@ def main(_):
         sample_fp="samples/samples_{epoch:04d}.png",
         sample_by_gen_fp="samples_by_gen/samples_{epoch:04d}.png",
         random_seed=6789)
+    model._restore('mgan_checkpoint_450', 450)
     model.fit(x_train)
 
 

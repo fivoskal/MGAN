@@ -301,6 +301,7 @@ class MGAN(object):
             print("Loading parameters from file:{}".format(filepath) )
             try:
               self.saver.restore(sess=self.tf_session, save_path=filepath)
+              self.epoch = 1
               print("Loaded succesfully")
             except:
               print("Ooops...")
