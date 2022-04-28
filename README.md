@@ -1,3 +1,6 @@
+My fork for MGAN with an added colab notebook and some missing scripts for dataset downloads.
+
+
 Mixture Generative Adversarial Nets (MGAN)
 ======================================================
 
