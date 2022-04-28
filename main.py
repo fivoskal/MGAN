@@ -15,7 +15,7 @@ FLAGS = None
 
 def main(_):
     tmp = pickle.load(open(FLAGS.dataset_file, "rb"))
-    x_train = tmp['data'].astype(np.float32).reshape([-1]+FLAGS.image_size ) / 127.5 - 1.
+    x_train = tmp['data'].astype(np.float32).reshape([-1]+list(FLAGS.image_size) ) / 127.5 - 1.
     model = MGAN(
         num_z=FLAGS.num_z,
         beta=FLAGS.beta,
@@ -32,7 +32,7 @@ def main(_):
         sample_fp="samples/samples_{epoch:04d}.png",
         sample_by_gen_fp="samples_by_gen/samples_{epoch:04d}.png",
         random_seed=6789)
-    model._restore('mgan_checkpoint_450', 450)
+#     model._restore('mgan_checkpoint_450', 450)
     model.fit(x_train)
 
 
